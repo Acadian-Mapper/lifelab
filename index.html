@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>LifeLab — Biology you can play with</title>
+  <style>
+    :root{--bg:#0f1724;--card:#0b1320;--accent:#7ee787;--muted:#9aa4b2;--glass: rgba(255,255,255,0.04)}
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial;background:linear-gradient(180deg,#071021 0%, #081426 60%);color:#e6eef8;min-height:100vh}
+    header{padding:28px 20px;display:flex;align-items:center;justify-content:space-between;max-width:1100px;margin:0 auto}
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo-mark{width:46px;height:46px;background:linear-gradient(135deg,#5af08e,#2fc4ff);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#042028;font-weight:700}
+    .nav{display:flex;gap:16px;align-items:center}
+    .btn{background:var(--accent);color:#062016;padding:10px 14px;border-radius:10px;border:none;font-weight:600;cursor:pointer}
+    main{max-width:1100px;margin:40px auto;padding:0 20px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+    h1{font-size:32px;margin:0 0 12px}
+    p.lead{color:var(--muted);margin:0 0 20px}
+    .cards{display:flex;gap:12px}
+    .card{background:var(--card);padding:16px;border-radius:12px;min-width:130px;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
+    .preview{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03)}
+
+    /* Simulation placeholder */
+    #sim-area{height:300px;border-radius:10px;background:linear-gradient(180deg,#06111a,#071422);display:flex;align-items:center;justify-content:center;color:var(--muted);border:1px dashed rgba(255,255,255,0.04)}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .preview{order:2}
+    }
+
+    footer{max-width:1100px;margin:40px auto;padding:20px;color:var(--muted);font-size:14px}
+
+    /* Simple modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(2,6,23,0.6)}
+    .modal .inner{background:#071428;padding:20px;border-radius:12px;max-width:720px;width:94%}
+    .close-x{float:right;background:none;border:none;color:var(--muted);font-size:18px;cursor:pointer}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="logo-mark">LL</div>
+      <div>
+        <div style="font-weight:700">LifeLab</div>
+        <div style="font-size:12px;color:var(--muted)">Biology you can play with</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="btn" id="startBtn">Start Learning</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div>
+        <h1>Explore biology by doing — not just reading.</h1>
+        <p class="lead">Interactive mini-simulations, puzzle-style lessons, and hands-on challenges from cells to ecosystems. Start with the free Foundations track.</p>
+
+        <div class="cards">
+          <div class="card">
+            <strong>Foundations</strong>
+            <div style="font-size:13px;color:var(--muted);margin-top:8px">Cell biology, molecules, basic genetics</div>
+          </div>
+          <div class="card">
+            <strong>Systems</strong>
+            <div style="font-size:13px;color:var(--muted);margin-top:8px">Organs, immunity, neural circuits</div>
+          </div>
+          <div class="card">
+            <strong>Frontiers</strong>
+            <div style="font-size:13px;color:var(--muted);margin-top:8px">CRISPR, bioengineering, epidemics</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px">
+          <button class="btn" onclick="openModal('signup')">Create account — it's free</button>
+          <button style="margin-left:10px;padding:10px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);cursor:pointer" onclick="openModal('how')">How it works</button>
+        </div>
+
+      </div>
+
+      <aside class="preview">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-weight:700">Live preview — Cell Explorer</div>
+          <div style="font-size:12px;color:var(--muted)">10–15 min</div>
+        </div>
+
+        <div id="sim-area">
+          <!-- PLACEHOLDER: Replace this box with your Unity WebGL build or an iframe pointing to the simulation. -->
+          <div style="text-align:center;padding:10px">
+            <div style="font-weight:600;margin-bottom:6px">Simulation placeholder</div>
+            <div style="font-size:13px;color:var(--muted);max-width:240px">Export a Unity WebGL build and place the <code>index.html</code> or build files here, or embed an iframe.</div>
+            <div style="margin-top:8px"><button onclick="alert('This is a placeholder — embed a Unity WebGL or Three.js build here')" class="btn">Open</button></div>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button style="flex:1;padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:var(--muted)" onclick="openModal('lesson')">View lesson</button>
+          <button style="flex:1;padding:8px;border-radius:8px;background:rgba(255,255,255,0.02);color:var(--muted);border:1px dashed rgba(255,255,255,0.03)" onclick="alert('Add to curriculum (mock)')">Add</button>
+        </div>
+      </aside>
+    </section>
+
+    <!-- Quick features -->
+    <section style="margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+      <div style="background:var(--card);padding:18px;border-radius:12px">
+        <strong>Adaptive paths</strong>
+        <p style="color:var(--muted);margin:8px 0 0;font-size:13px">Learners get smarter suggestions based on performance.</p>
+      </div>
+      <div style="background:var(--card);padding:18px;border-radius:12px">
+        <strong>Short lessons</strong>
+        <p style="color:var(--muted);margin:8px 0 0;font-size:13px">10–15 min lessons designed as puzzles and experiments.</p>
+      </div>
+      <div style="background:var(--card);padding:18px;border-radius:12px">
+        <strong>Projects</strong>
+        <p style="color:var(--muted);margin:8px 0 0;font-size:13px">Capstone projects: design a bacterium, manage an outbreak, engineer a drought-resistant plant.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Built with ❤️ — replace this with your branding. Tips: to add a Unity WebGL scene, export your build and host the build folder, then embed with an iframe in the #sim-area. For auth, start with Firebase Auth. For CMS, consider Sanity or Supabase for a developer-friendly DB.
+  </footer>
+
+  <!-- Modal UI (simple) -->
+  <div class="modal" id="modal">
+    <div class="inner">
+      <button class="close-x" onclick="closeModal()">✕</button>
+      <div id="modal-content" style="margin-top:6px"></div>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    function openModal(type){
+      modal.style.display='flex';
+      if(type==='signup'){
+        modalContent.innerHTML = `<h3>Create an account</h3><p style="color:var(--muted)">This starter site is static — to enable sign-up you'll need a backend like Firebase Auth. Want me to add sample Firebase code?</p><div style="margin-top:12px"><button class="btn" onclick="closeModal()">OK</button></div>`;
+      } else if(type==='how'){
+        modalContent.innerHTML = `<h3>How LifeLab works</h3><p style="color:var(--muted)">Lessons are short interactive simulations + challenge questions. Replace the simulation placeholder with a Unity WebGL build or a Three.js module. I can help with step-by-step embedding instructions.</p><div style="margin-top:12px"><button class="btn" onclick="closeModal()">Nice</button></div>`;
+      } else if(type==='lesson'){
+        modalContent.innerHTML = `<h3>Cell Explorer — Quick lesson</h3><ol style="color:var(--muted)"><li>Zoom into the cell</li><li>Repair the mitochondrion by swapping proteins</li><li>Observe ATP output change</li></ol><div style="margin-top:12px"><button class="btn" onclick="closeModal()">Start lesson</button></div>`;
+      }
+    }
+    function closeModal(){modal.style.display='none'}
+    document.getElementById('startBtn').addEventListener('click',()=>openModal('signup'));
+
+    // Helpful dev comment for you:
+    // To embed a Unity WebGL build: upload build files to your hosting (e.g., /sim/build/), then replace the content of #sim-area with an <iframe src="/sim/build/index.html"></iframe> or inject the Unity loader per Unity's instructions.
+  </script>
+</body>
+</html>
